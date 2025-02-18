@@ -4,7 +4,8 @@ import PhotoCarousel from "@/components/store/PhotoCarousel";
 import SaveStore from "@/components/store/SaveStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { apiBaseUrl, imageBaseUrl } from "@/lib/constants";
+import { APIBASEURL } from "@/lib/constants";
+import { imageBaseUrl } from "@/lib/constants";
 import { IStore } from "@/types/store";
 import { IndianRupee, Mail, MapPin, MessageCircleMore, PhoneCall, Send } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -19,16 +20,16 @@ interface StoreSlugCity {
 }
 
 export async function generateStaticParams() {
-  const res = await fetch(`${apiBaseUrl}/store/slug-city`);
+  const res = await fetch(`${APIBASEURL}/store/slug-city`);
   const data: StoreSlugCity[] = await res.json();
   const slugCity = data.map((slugCity) => ({ slug: slugCity.store.slug, city: slugCity.city.name.toLowerCase() }));
-  console.log(slugCity);
+  console.log("slugCity", slugCity);
   return slugCity;
 }
 
 async function getStoreBySlugCity(params: Promise<{ slug: string; city: string }>) {
   const param = await params;
-  const res = await fetch(`${apiBaseUrl}/store/${param.slug}/city/${param.city}`);
+  const res = await fetch(`${APIBASEURL}/store/${param.slug}/city/${param.city}`);
   const store = await res.json();
 
   return store;
@@ -149,10 +150,10 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
                 <CardDescription>Find Our Location Details</CardDescription>
               </CardHeader>
               <CardContent className="max-xs:p-4">
-                <p>{store?.storeAddresses.addressLine}</p>
+                <p>{store?.storeAddresses?.addressLine}</p>
               </CardContent>
               <CardFooter className="max-xs:p-4 flex justify-between">
-                <a href={store?.storeAddresses.googleMapLink}>
+                <a href={store?.storeAddresses?.googleMapLink}>
                   <Button>
                     <MapPin /> Location
                   </Button>
@@ -186,10 +187,14 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
                 <CardDescription>Quick Access to Key Links</CardDescription>
               </CardHeader>
               <CardContent className="max-xs:p-4 flex gap-3">
-                {store?.storeSocialMedias.map((link) => (
+                {store?.storeSocialMedias?.map((link) => (
                   <a key={link.id} href={link.link}>
                     <Button variant={"outline"} size={"icon"}>
-                      <img src={`/icon/${link.socialMedia.icon}.svg`} alt={link.socialMedia.name} className="w-5 h-5" />
+                      <img
+                        src={`/icon/${link?.socialMedia?.icon}.svg`}
+                        alt={link?.socialMedia?.name}
+                        className="w-5 h-5"
+                      />
                     </Button>
                   </a>
                 ))}

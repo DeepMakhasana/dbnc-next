@@ -4,6 +4,8 @@ export const constants = {
   FORMSTEP: "profile_form_step",
 };
 
+export const APIBASEURL = "https://ky4jkxi7x6.execute-api.ap-south-1.amazonaws.com/production/api";
+
 export const endpoints = {
   auth: {
     main: "/auth",
@@ -41,5 +43,3 @@ export const imageBaseUrl = "https://dbnc.s3.ap-south-1.amazonaws.com/";
 
 // export const MAIN_COURSES_PAGE = "vcp-client.vercel.app";
 export const MAIN_COURSES_PAGE = "https://paramcadcenter.com/learn";
-
-export const apiBaseUrl = "http://localhost:8000/api";

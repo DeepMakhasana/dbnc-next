@@ -1,4 +1,4 @@
-import { apiBaseUrl } from "@/lib/constants";
+import { APIBASEURL } from "@/lib/constants";
 
 interface ICitiesAPIResponse {
   name: string;
@@ -10,7 +10,7 @@ interface ICities {
 }
 
 export async function generateStaticParams() {
-  const res = await fetch(`${apiBaseUrl}/utils/available-cities`);
+  const res = await fetch(`${APIBASEURL}/utils/available-cities`);
   const data: ICitiesAPIResponse[] = await res.json();
   const cities: ICities[] = data.map((city) => ({ city: city.name.toLowerCase() }));
   console.log("cities", cities);
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 }
 
 async function getStoreByCity(params: Promise<{ city: string }>) {
-  const res = await fetch(`${apiBaseUrl}/store/city/${(await params).city}`);
+  const res = await fetch(`${APIBASEURL}/store/city/${(await params).city}`);
   const store = await res.json();
 
   return store;
