@@ -1,5 +1,6 @@
 "use client";
 import Header from "@/components/Header";
+import routeProtection from "@/components/HOC/routeProtection";
 import { unsaveStore } from "@/components/store/SaveStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -107,4 +108,4 @@ const SavedStoreCard = ({ store }: { store: SavedStore }) => {
   );
 };
 
-export default Saved;
+export default routeProtection(Saved);

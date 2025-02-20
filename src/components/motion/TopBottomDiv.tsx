@@ -8,7 +8,7 @@ const MotionTopBottomDiv = React.forwardRef<HTMLDivElement, React.ComponentProps
       <motion.div
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ delay: 0.3, ease: "easeInOut" }}
+        transition={{ delay: 0.2, ease: "easeInOut" }}
         ref={ref}
         className={className}
       >

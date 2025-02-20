@@ -8,6 +8,8 @@ import { endpoints } from "@/lib/constants";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { SaveStorePayload, SaveStoreResponse } from "@/types/store";
 import { toast } from "@/hooks/use-toast";
+import useAuthContext from "@/context/auth/useAuthContext";
+import { useRouter } from "next/navigation";
 
 async function getSaveStoreStatus(storeId: number) {
   const { data } = await axiosInstance.get(`${endpoints.store.save}/${storeId}`);
@@ -27,9 +29,12 @@ export async function unsaveStore(payload: SaveStorePayload): Promise<SaveStoreR
 }
 
 const SaveStore = ({ storeId }: { storeId: number }) => {
+  const { isAuthenticated } = useAuthContext();
+  const router = useRouter();
   const { data, isPending } = useQuery<boolean>({
     queryKey: ["saveStoreStatus", { storeId }],
     queryFn: () => getSaveStoreStatus(storeId),
+    enabled: !!isAuthenticated,
   });
   const queryClient = useQueryClient();
 
@@ -71,6 +76,18 @@ const SaveStore = ({ storeId }: { storeId: number }) => {
     },
   });
 
+  const saveHandler = () => {
+    if (!isAuthenticated) {
+      router.push("/auth");
+    } else {
+      if (data) {
+        unsaveMutate({ storeId });
+      } else {
+        mutate({ storeId });
+      }
+    }
+  };
+
   if (isPending || mutateIsPending || unSaveMutateIsPending) {
     return (
       <Button variant="outline" disabled>
@@ -81,10 +98,7 @@ const SaveStore = ({ storeId }: { storeId: number }) => {
   }
 
   return (
-    <Button
-      variant={data ? "default" : "outline"}
-      onClick={() => (data ? unsaveMutate({ storeId }) : mutate({ storeId }))}
-    >
+    <Button variant={data ? "default" : "outline"} onClick={saveHandler}>
       {data ? <BookmarkCheck /> : <Bookmark />} {data ? "saved" : "save"}
     </Button>
   );
