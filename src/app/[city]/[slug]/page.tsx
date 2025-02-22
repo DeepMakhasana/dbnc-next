@@ -2,6 +2,7 @@ import { MotionHideShowSection } from "@/components/motion/HideShowSection";
 import Header from "@/components/store/Header";
 import PhotoCarousel from "@/components/store/PhotoCarousel";
 import SaveStore from "@/components/store/SaveStore";
+import ShareStore from "@/components/store/ShareStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { APIBASEURL } from "@/lib/constants";
@@ -69,11 +70,12 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
                     <MessageCircleMore />
                   </Button>
                 </a>
-                <a href={`https://mail.google.com/mail/?view=cm&to=${store?.email}`}>
+                <a href={`mailto:${store?.email}`}>
                   <Button variant="outline" size={"icon"}>
                     <Mail />
                   </Button>
                 </a>
+                <ShareStore />
                 <SaveStore storeId={store?.id} />
               </CardFooter>
             </Card>

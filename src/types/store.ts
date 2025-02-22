@@ -92,6 +92,7 @@ export type SavedStore = {
     slug: string;
     logo: string;
     storeAddresses: {
+      addressLine: string;
       city: {
         name: string;
       };
