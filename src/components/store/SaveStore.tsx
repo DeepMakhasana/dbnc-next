@@ -31,12 +31,14 @@ export async function unsaveStore(payload: SaveStorePayload): Promise<SaveStoreR
 const SaveStore = ({ storeId }: { storeId: number }) => {
   const { isAuthenticated } = useAuthContext();
   const router = useRouter();
-  const { data, isPending } = useQuery<boolean>({
+  const { data, isLoading } = useQuery<boolean>({
     queryKey: ["saveStoreStatus", { storeId }],
     queryFn: () => getSaveStoreStatus(storeId),
     enabled: !!isAuthenticated,
   });
   const queryClient = useQueryClient();
+
+  console.log("data: ", data, isLoading);
 
   // mutation for save store
   const { mutate, isPending: mutateIsPending } = useMutation<SaveStoreResponse, Error, SaveStorePayload>({
@@ -88,7 +90,7 @@ const SaveStore = ({ storeId }: { storeId: number }) => {
     }
   };
 
-  if (isPending || mutateIsPending || unSaveMutateIsPending) {
+  if (isLoading || mutateIsPending || unSaveMutateIsPending) {
     return (
       <Button variant="outline" disabled>
         <Skeleton className="h-5 w-5 rounded" />

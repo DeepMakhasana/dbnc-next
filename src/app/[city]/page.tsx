@@ -54,7 +54,9 @@ export default async function StoreByCity({ params }: { params: Promise<{ city: 
       <main>
         <section>
           <div className="pb-6">
-            <h1 className="text-2xl font-medium line-clamp-1">Store in {city.city}</h1>
+            <h1 className="text-2xl font-medium line-clamp-1">
+              Live Store in {city.city[0].toUpperCase() + city.city.slice(1)}
+            </h1>
             <p className="text-sm text-muted-foreground sm:block">Available stores</p>
           </div>
           {/* stores */}

@@ -10,8 +10,9 @@ import { endpoints, imageBaseUrl } from "@/lib/constants";
 import { formateDateTime } from "@/lib/utils";
 import { SavedStore, SaveStorePayload, SaveStoreResponse } from "@/types/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Bookmark, BookmarkMinus, List, Loader2, MapPin, Store } from "lucide-react";
+import { Bookmark, BookmarkMinus, ChevronLeft, List, Loader2, MapPin, Store } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 async function getSaveStores() {
   const { data } = await axiosInstance.get(endpoints.store.save);
@@ -19,6 +20,7 @@ async function getSaveStores() {
 }
 
 const Saved = () => {
+  const router = useRouter();
   const { data, isPending } = useQuery<SavedStore[]>({
     queryKey: ["saveStores"],
     queryFn: getSaveStores,
@@ -29,10 +31,17 @@ const Saved = () => {
       <Header />
       <main>
         <section>
-          <div className="pb-6">
-            <h1 className="text-2xl font-medium line-clamp-1">Saved List</h1>
-            <p className="text-sm text-muted-foreground sm:block">Your best selective stores</p>
+          <div className="flex gap-4 items-center mb-5">
+            <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => router.back()}>
+              <ChevronLeft className="h-4 w-4" />
+              <span className="sr-only">Back</span>
+            </Button>
+            <div>
+              <h1 className="text-2xl font-medium line-clamp-1">Saved List</h1>
+              <p className="text-sm text-muted-foreground sm:block">Your best selective stores</p>
+            </div>
           </div>
+
           {/* saved stores */}
           {data && data.length === 0 && (
             <p className="text-center text-sm text-muted-foreground">No any saved store!</p>

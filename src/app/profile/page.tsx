@@ -12,9 +12,9 @@ function Auth() {
             <div className="flex flex-col items-center gap-2">
               <Link href="/" className="flex flex-col items-center gap-2 font-medium">
                 <div className="flex h-8 w-8 items-center justify-center rounded-md">
-                  <img src="/bliveprofile.svg" alt="bliveprofile" />
+                  <img src="/liveyst.svg" alt="liveyst" />
                 </div>
-                <span className="sr-only">Bliveprofile</span>
+                <span className="sr-only">liveyst</span>
               </Link>
               <h1 className="text-3xl font-bold">Profile</h1>
               <div className="text-center text-sm">Update your profile details</div>
