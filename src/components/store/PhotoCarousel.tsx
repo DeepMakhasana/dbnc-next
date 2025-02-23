@@ -31,7 +31,7 @@ const PhotoCarousel = ({ photos, storeName }: { photos: StorePhoto[]; storeName:
   }, [api]);
   return (
     <div className="mx-auto max-w-xs">
-      <Carousel setApi={setApi} className="w-full max-w-xs">
+      <Carousel setApi={setApi} className="w-full max-w-sm">
         <CarouselContent>
           {photos?.map((photo) => (
             <CarouselItem key={photo.index}>

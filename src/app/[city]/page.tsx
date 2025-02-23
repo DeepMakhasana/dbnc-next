@@ -79,14 +79,16 @@ export default async function StoreByCity({ params }: { params: Promise<{ city: 
 const StoreCard = ({ store }: { store: Store }) => {
   return (
     <Card className="flex flex-col">
-      <CardHeader className="max-xs:p-4">
-        <div className="w-full flex justify-center">
-          <img src={`${imageBaseUrl}${store.logo}`} alt={store.name} className="w-28 h-28 object-contain" />
+      <CardHeader className="p-0">
+        <div className="w-full h-48 flex justify-center">
+          <img src={`${imageBaseUrl}${store.logo}`} alt={store.name} className="object-cover" />
         </div>
-        <CardTitle>
-          <h2 className="text-xl">{store.name}</h2>
-        </CardTitle>
-        <CardDescription>{store.tagline}</CardDescription>
+        <div className="max-xs:p-4 p-6">
+          <CardTitle>
+            <h2 className="text-xl">{store.name}</h2>
+          </CardTitle>
+          <CardDescription>{store.tagline}</CardDescription>
+        </div>
       </CardHeader>
       <CardContent className="max-xs:py-2 max-xs:px-4 flex flex-col gap-2 ">
         <p className="flex gap-2 items-center text-sm">

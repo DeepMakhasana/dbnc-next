@@ -52,14 +52,14 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
     <main className="max-w-screen-2xl mx-auto px-3 lg:px-8">
       <Header isOpen={store?.isOpen} />
       <div className="grid 2xl:grid-cols-3 gap-4 py-4 2xl:py-2 mb-4">
-        <div className="h-full flex flex-col gap-4 justify-between lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
+        <div className="h-full flex flex-col gap-4 lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
           {/* main Information */}
           <MotionHideShowSection>
             <Card className="w-full h-full border-none shadow-none">
               <CardContent className="max-xs:p-4">
                 <div className="flex flex-col items-center">
-                  <img src={`${imageBaseUrl}${store?.logo}`} alt={store?.name} className="w-28 h-28 object-contain" />
-                  <h1 className="text-center text-2xl font-bold text-zinc-800">{store?.name}</h1>
+                  <img src={`${imageBaseUrl}${store?.logo}`} alt={store?.name} className="w-full h-48 object-cover" />
+                  <h1 className="text-center text-2xl font-bold text-zinc-800 mt-4">{store?.name}</h1>
                   <h3 className="text-center text-zinc-500 text-sm sm:text-base">{store?.tagline}</h3>
                 </div>
               </CardContent>
@@ -107,7 +107,7 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
           </MotionHideShowSection>
         </div>
 
-        <div className="h-full flex flex-col gap-4 justify-between lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
+        <div className="h-full flex flex-col gap-4 justify-evenly lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
           {/* feedback */}
           <MotionHideShowSection>
             <Card className="w-full">
@@ -171,17 +171,17 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
             </Card>
           </MotionHideShowSection>
         </div>
-        <div className="h-full flex flex-col gap-4 justify-between lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
+        <div className="h-full flex flex-col gap-4 justify-evenly lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
           {/* photos */}
           <MotionHideShowSection>
             <Card className="w-full">
-              <CardHeader className="max-xs:p-4 2xl:hidden">
+              <CardHeader className="max-xs:p-4">
                 <CardTitle>
                   <h2>Photos</h2>
                 </CardTitle>
                 <CardDescription>Gallery of Our Best Moments</CardDescription>
               </CardHeader>
-              <CardContent className="max-xs:p-4 2xl:mt-8">
+              <CardContent className="max-xs:p-4">
                 <PhotoCarousel photos={store?.storePhotos} storeName={store?.name} />
               </CardContent>
             </Card>
