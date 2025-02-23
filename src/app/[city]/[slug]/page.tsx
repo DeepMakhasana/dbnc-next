@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 
 interface StoreSlugCity {
   store: {
+    id: number;
     slug: string;
   };
   city: {
@@ -23,7 +24,10 @@ interface StoreSlugCity {
 export async function generateStaticParams() {
   const res = await fetch(`${APIBASEURL}/store/slug-city`);
   const data: StoreSlugCity[] = await res.json();
-  const slugCity = data.map((slugCity) => ({ slug: slugCity.store.slug, city: slugCity.city.name.toLowerCase() }));
+  const slugCity = data.map((slugCity) => ({
+    slug: `${slugCity.store.slug}-${slugCity.store.id}`,
+    city: slugCity.city.name.toLowerCase(),
+  }));
   console.log("slugCity", slugCity);
   return slugCity;
 }

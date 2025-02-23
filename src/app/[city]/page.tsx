@@ -102,7 +102,7 @@ const StoreCard = ({ store }: { store: Store }) => {
         </p> */}
       </CardContent>
       <CardFooter className="max-xs:p-4 flex justify-between">
-        <Link href={`/${store.storeAddresses.city.name.toLowerCase()}/${store.slug}`}>
+        <Link href={`/${store.storeAddresses.city.name.toLowerCase()}/${store.slug}-${store.id}`}>
           <Button>
             <Store /> Go to Store
           </Button>
