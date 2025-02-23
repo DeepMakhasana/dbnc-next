@@ -156,7 +156,10 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
                 <CardDescription>Find Our Location Details</CardDescription>
               </CardHeader>
               <CardContent className="max-xs:p-4">
-                <p>{store?.storeAddresses?.addressLine}</p>
+                <p>
+                  {store.storeAddresses.addressLine1}, {store.storeAddresses.addressLine2},{" "}
+                  {store.storeAddresses.city.name}
+                </p>
               </CardContent>
               <CardFooter className="max-xs:p-4 flex justify-between">
                 <a href={store?.storeAddresses?.googleMapLink}>

@@ -11,7 +11,8 @@ interface State {
 }
 
 interface StoreAddress {
-  addressLine: string;
+  addressLine1: string;
+  addressLine2: string;
   googleMapLink: string;
   city: City;
   state: State;
@@ -92,7 +93,8 @@ export type SavedStore = {
     slug: string;
     logo: string;
     storeAddresses: {
-      addressLine: string;
+      addressLine1: string;
+      addressLine2: string;
       city: {
         name: string;
       };

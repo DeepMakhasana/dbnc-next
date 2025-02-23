@@ -100,7 +100,8 @@ const SavedStoreCard = ({ store }: { store: SavedStore }) => {
           <span>
             <MapPin className="w-4 h-4" />
           </span>{" "}
-          {store.store.storeAddresses.addressLine}
+          {store.store.storeAddresses.addressLine1}, {store.store.storeAddresses.addressLine2},{" "}
+          {store.store.storeAddresses.city.name}
         </p>
         <p className="flex gap-2 items-center text-sm">
           <Bookmark className="w-4 h-4" /> {formateDateTime(store.createdAt)}

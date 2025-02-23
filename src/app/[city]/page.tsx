@@ -21,7 +21,8 @@ interface Store {
   number: string;
   slug: string;
   storeAddresses: {
-    addressLine: string;
+    addressLine1: string;
+    addressLine2: string;
     city: { name: string };
     state: { name: string };
   };
@@ -95,7 +96,7 @@ const StoreCard = ({ store }: { store: Store }) => {
           <span>
             <MapPin className="w-4 h-4" />
           </span>{" "}
-          {store.storeAddresses.addressLine}
+          {store.storeAddresses.addressLine1}, {store.storeAddresses.addressLine2}, {store.storeAddresses.city.name}
         </p>
         {/* <p className="flex gap-2 items-center text-sm">
           <Bookmark className="w-4 h-4" /> {formateDateTime(store.createdAt)}
