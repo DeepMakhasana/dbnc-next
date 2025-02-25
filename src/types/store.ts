@@ -13,6 +13,7 @@ interface State {
 interface StoreAddress {
   addressLine1: string;
   addressLine2: string;
+  pincode: number;
   googleMapLink: string;
   city: City;
   state: State;

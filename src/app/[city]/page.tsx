@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { APIBASEURL, imageBaseUrl } from "@/lib/constants";
 import { List, MapPin, Store } from "lucide-react";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export interface ICitiesAPIResponse {
@@ -31,13 +31,8 @@ interface Store {
   tagline: string;
 }
 
-export async function generateMetadata(
-  { params }: { params: Promise<{ city: string }> },
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
   const city = (await params).city;
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
 
   return {
     title: `Live stores in ${city}`,
@@ -51,7 +46,6 @@ export async function generateMetadata(
     openGraph: {
       title: `Live stores in ${city}`,
       description: `Quickly check stores status in ${city} with Liveyst! Get real-time updates on opening status, contact info, and services for seamless visits.`,
-      images: [...previousImages],
     },
   };
 }

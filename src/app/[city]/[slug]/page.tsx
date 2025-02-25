@@ -9,7 +9,7 @@ import { APIBASEURL } from "@/lib/constants";
 import { imageBaseUrl } from "@/lib/constants";
 import { IStore } from "@/types/store";
 import { IndianRupee, Mail, MapPin, MessageCircleMore, PhoneCall, Send } from "lucide-react";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface StoreProps {
@@ -26,11 +26,8 @@ interface StoreSlugCity {
   };
 }
 
-export async function generateMetadata({ params }: StoreProps, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: StoreProps): Promise<Metadata> {
   const store: IStore = await getStoreBySlugCity(params);
-
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
 
   return {
     title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name}`,
@@ -39,7 +36,7 @@ export async function generateMetadata({ params }: StoreProps, parent: Resolving
     openGraph: {
       title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name}`,
       description: store.bio,
-      images: [store.logo, ...previousImages],
+      images: [store.logo],
     },
   };
 }
@@ -143,7 +140,7 @@ export default async function StoreBySlug({ params }: StoreProps) {
                 <CardDescription>Share Your Valuable Feedback</CardDescription>
               </CardHeader>
               <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
-                <p>Give feedback & review</p>
+                <p>Give Feedback & Review</p>
                 <a href={store?.feedbackLink}>
                   <Button>
                     <Send /> send
@@ -183,7 +180,7 @@ export default async function StoreBySlug({ params }: StoreProps) {
               <CardContent className="max-xs:p-4">
                 <p>
                   {store.storeAddresses.addressLine1}, {store.storeAddresses.addressLine2},{" "}
-                  {store.storeAddresses.city.name}
+                  {store.storeAddresses.city.name}, {store.storeAddresses.state.name} {store.storeAddresses.pincode}
                 </p>
               </CardContent>
               <CardFooter className="max-xs:p-4 flex justify-between">
@@ -193,6 +190,25 @@ export default async function StoreBySlug({ params }: StoreProps) {
                   </Button>
                 </a>
               </CardFooter>
+            </Card>
+          </MotionHideShowSection>
+          {/* lets connect */}
+          <MotionHideShowSection>
+            <Card className="w-full">
+              <CardHeader className="max-xs:p-4">
+                <CardTitle>
+                  <h2>Let&apos;s connect</h2>
+                </CardTitle>
+                <CardDescription>Connect for Business</CardDescription>
+              </CardHeader>
+              <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
+                <p>Let&apos;s Connect for Product and Services</p>
+                <a href={`https://api.whatsapp.com/send?phone=+91${store?.whatsappNumber}`}>
+                  <Button>
+                    <img src={`/icon/whatsapp.svg`} alt={"whatsapp"} className="w-5 h-5" /> connect
+                  </Button>
+                </a>
+              </CardContent>
             </Card>
           </MotionHideShowSection>
         </div>
