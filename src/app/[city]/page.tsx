@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { APIBASEURL, imageBaseUrl } from "@/lib/constants";
 import { List, MapPin, Store } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 
 export interface ICitiesAPIResponse {
@@ -28,6 +29,31 @@ interface Store {
   };
   category: { name: string };
   tagline: string;
+}
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ city: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const city = (await params).city;
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: `Live stores in ${city}`,
+    description: `Quickly check stores status in ${city} with Liveyst! Get real-time updates on opening status, contact info, and services for seamless visits.`,
+    keywords: [
+      `live opening status in ${city}`,
+      `live stores status in ${city}`,
+      "live near by store opening status",
+      "liveyst",
+    ],
+    openGraph: {
+      title: `Live stores in ${city}`,
+      description: `Quickly check stores status in ${city} with Liveyst! Get real-time updates on opening status, contact info, and services for seamless visits.`,
+      images: [...previousImages],
+    },
+  };
 }
 
 export async function generateStaticParams() {
@@ -80,10 +106,10 @@ const StoreCard = ({ store }: { store: Store }) => {
   return (
     <Card className="flex flex-col">
       <CardHeader className="p-0">
-        <div className="w-full h-48 flex justify-center">
-          <img src={`${imageBaseUrl}${store.logo}`} alt={store.name} className="object-cover" />
+        <div className="w-full h-48 flex justify-center p-2">
+          <img src={`${imageBaseUrl}${store.logo}`} alt={store.name} className="object-contain rounded" />
         </div>
-        <div className="max-xs:p-4 p-6">
+        <div className="max-xs:p-4 px-6 py-3">
           <CardTitle>
             <h2 className="text-xl">{store.name}</h2>
           </CardTitle>

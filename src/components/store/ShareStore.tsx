@@ -3,13 +3,13 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Share2 } from "lucide-react";
 
-const ShareStore = () => {
+const ShareStore = ({ title, bio }: { title: string; bio: string }) => {
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Check this out!",
-          text: "This is a great website.",
+          title,
+          text: `${bio} \n`,
           url: window.location.href,
         });
       } catch (error) {

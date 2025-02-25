@@ -9,7 +9,12 @@ import { APIBASEURL } from "@/lib/constants";
 import { imageBaseUrl } from "@/lib/constants";
 import { IStore } from "@/types/store";
 import { IndianRupee, Mail, MapPin, MessageCircleMore, PhoneCall, Send } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
+
+interface StoreProps {
+  params: Promise<{ city: string; slug: string }>;
+}
 
 interface StoreSlugCity {
   store: {
@@ -18,6 +23,24 @@ interface StoreSlugCity {
   };
   city: {
     name: string;
+  };
+}
+
+export async function generateMetadata({ params }: StoreProps, parent: ResolvingMetadata): Promise<Metadata> {
+  const store: IStore = await getStoreBySlugCity(params);
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name}`,
+    description: store.bio,
+    keywords: store.storeServices.map((s) => `${s.service.name} at ${store.storeAddresses.city.name}`),
+    openGraph: {
+      title: `${store.name} at ${store.storeAddresses.addressLine1}, ${store.storeAddresses.city.name}`,
+      description: store.bio,
+      images: [store.logo, ...previousImages],
+    },
   };
 }
 
@@ -40,9 +63,8 @@ async function getStoreBySlugCity(params: Promise<{ slug: string; city: string }
   return store;
 }
 
-export default async function StoreBySlug({ params }: { params: Promise<{ city: string; slug: string }> }) {
+export default async function StoreBySlug({ params }: StoreProps) {
   const store: IStore = await getStoreBySlugCity(params);
-  console.log(store);
 
   if (!store) {
     notFound();
@@ -58,7 +80,7 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
             <Card className="w-full h-full border-none shadow-none">
               <CardContent className="max-xs:p-4">
                 <div className="flex flex-col items-center">
-                  <img src={`${imageBaseUrl}${store?.logo}`} alt={store?.name} className="w-full h-48 object-cover" />
+                  <img src={`${imageBaseUrl}${store?.logo}`} alt={store?.name} className="w-full h-48 object-contain" />
                   <h1 className="text-center text-2xl font-bold text-zinc-800 mt-4">{store?.name}</h1>
                   <h3 className="text-center text-zinc-500 text-sm sm:text-base">{store?.tagline}</h3>
                 </div>
@@ -79,7 +101,10 @@ export default async function StoreBySlug({ params }: { params: Promise<{ city: 
                     <Mail />
                   </Button>
                 </a>
-                <ShareStore />
+                <ShareStore
+                  title={`${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name}`}
+                  bio={store.bio}
+                />
                 <SaveStore storeId={store?.id} />
               </CardFooter>
             </Card>

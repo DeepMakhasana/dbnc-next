@@ -84,10 +84,10 @@ const SavedStoreCard = ({ store }: { store: SavedStore }) => {
   return (
     <Card className="flex flex-col">
       <CardHeader className="p-0">
-        <div className="w-full h-48 flex justify-center">
-          <img src={`${imageBaseUrl}${store.store.logo}`} alt={store.store.name} className="object-cover" />
+        <div className="w-full h-48 flex p-2">
+          <img src={`${imageBaseUrl}${store.store.logo}`} alt={store.store.name} className="object-contain" />
         </div>
-        <div className="max-xs:p-4 p-6">
+        <div className="max-xs:p-4 px-6 py-3">
           <CardTitle>
             <h2 className="text-xl">{store.store.name}</h2>
           </CardTitle>
