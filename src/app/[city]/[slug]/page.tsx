@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: StoreProps, parent: Resolving
     description: store.bio,
     keywords: store.storeServices.map((s) => `${s.service.name} at ${store.storeAddresses.city.name}`),
     openGraph: {
-      title: `${store.name} at ${store.storeAddresses.addressLine1}, ${store.storeAddresses.city.name}`,
+      title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name}`,
       description: store.bio,
       images: [store.logo, ...previousImages],
     },
