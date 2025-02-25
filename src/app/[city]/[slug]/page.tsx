@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: StoreProps): Promise<Metadata
   const store: IStore = await getStoreBySlugCity(params);
 
   return {
-    title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name}`,
+    title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name} | Liveyst`,
     description: store.bio,
     keywords: store.storeServices.map((s) => `${s.service.name} at ${store.storeAddresses.city.name}`),
     openGraph: {
-      title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name}`,
+      title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name} | Liveyst`,
       description: store.bio,
       images: [store.logo],
     },
@@ -197,15 +197,15 @@ export default async function StoreBySlug({ params }: StoreProps) {
             <Card className="w-full">
               <CardHeader className="max-xs:p-4">
                 <CardTitle>
-                  <h2>Let&apos;s connect</h2>
+                  <h2>Let&apos;s Connect</h2>
                 </CardTitle>
-                <CardDescription>Connect for Business</CardDescription>
+                <CardDescription>Connect for Product or Services</CardDescription>
               </CardHeader>
               <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
-                <p>Let&apos;s Connect for Product and Services</p>
+                <p>Connect on WhatsApp</p>
                 <a href={`https://api.whatsapp.com/send?phone=+91${store?.whatsappNumber}`}>
                   <Button>
-                    <img src={`/icon/whatsapp.svg`} alt={"whatsapp"} className="w-5 h-5" /> connect
+                    <img src={`/icon/whatsapp.svg`} alt={"whatsapp"} className="w-4 h-4" /> connect
                   </Button>
                 </a>
               </CardContent>

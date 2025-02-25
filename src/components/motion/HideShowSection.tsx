@@ -6,9 +6,9 @@ const MotionHideShowSection = React.forwardRef<HTMLSelectElement, React.Componen
   ({ children, className }, ref) => {
     return (
       <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 100 }}
-        transition={{ delay: 0.2 }}
+        initial={{ opacity: 0, scale: 0.98, filter: "blur(2px)" }}
+        animate={{ opacity: 100, scale: 1, filter: "blur(0px)" }}
+        transition={{ delay: 0.3 }}
         ref={ref}
         className={className}
       >

@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   const city = (await params).city;
 
   return {
-    title: `Live stores in ${city}`,
+    title: `Live stores in ${city} | Liveyst`,
     description: `Quickly check stores status in ${city} with Liveyst! Get real-time updates on opening status, contact info, and services for seamless visits.`,
     keywords: [
       `live opening status in ${city}`,
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
       "liveyst",
     ],
     openGraph: {
-      title: `Live stores in ${city}`,
+      title: `Live stores in ${city} | Liveyst`,
       description: `Quickly check stores status in ${city} with Liveyst! Get real-time updates on opening status, contact info, and services for seamless visits.`,
     },
   };

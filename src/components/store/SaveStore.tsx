@@ -94,7 +94,7 @@ const SaveStore = ({ storeId }: { storeId: number }) => {
     return (
       <Button variant="outline" disabled>
         <Skeleton className="h-5 w-5 rounded" />
-        <Skeleton className="h-5 w-10 ml-2" />
+        <Skeleton className="h-5 w-10 ml-1" />
       </Button>
     );
   }
