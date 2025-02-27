@@ -4,7 +4,7 @@ export const constants = {
   FORMSTEP: "profile_form_step",
 };
 
-export const APIBASEURL = "http://localhost:8000/api";
+export const APIBASEURL = "https://ky4jkxi7x6.execute-api.ap-south-1.amazonaws.com/production/api";
 
 export const endpoints = {
   auth: {

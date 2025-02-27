@@ -2,8 +2,8 @@
 import axios from "axios";
 import { constants } from "./constants";
 
-// export const BASEURL = "https://ky4jkxi7x6.execute-api.ap-south-1.amazonaws.com/production/api";
-export const BASEURL = "http://localhost:8000/api";
+export const BASEURL = "https://ky4jkxi7x6.execute-api.ap-south-1.amazonaws.com/production/api";
+// export const BASEURL = "http://localhost:8000/api";
 
 const axiosInstance = axios.create({
   baseURL: BASEURL,
