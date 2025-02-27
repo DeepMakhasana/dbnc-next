@@ -71,7 +71,7 @@ export const LocationProvider: FC<LocationProviderProps> = ({ children }) => {
 
   useEffect(() => {
     setCurrentLocation();
-  }, []);
+  }, [setCurrentLocation]);
 
   return (
     <LocationContext.Provider value={{ isSelected, isLoading, coordinates, set }}>{children}</LocationContext.Provider>

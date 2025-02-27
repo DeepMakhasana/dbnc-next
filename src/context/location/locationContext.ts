@@ -1,6 +1,6 @@
 "use client";
 // import { IUser } from "@/types/auth";
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
 
 export type TCoordinates = {
   latitude: number;
