@@ -5,6 +5,7 @@ import "./globals.css";
 import TanstackProvider from "@/components/TanstackProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/context/auth/authProvider";
+import { LocationProvider } from "@/context/location/locationProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +31,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AuthProvider>
-          <TanstackProvider>
-            {children}
-            <Toaster />
-            {/* <Footer /> */}
-          </TanstackProvider>
-        </AuthProvider>
+        <LocationProvider>
+          <AuthProvider>
+            <TanstackProvider>
+              {children}
+              <Toaster />
+              {/* <Footer /> */}
+            </TanstackProvider>
+          </AuthProvider>
+        </LocationProvider>
       </body>
     </html>
   );

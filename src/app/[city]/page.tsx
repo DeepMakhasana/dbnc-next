@@ -101,9 +101,9 @@ const StoreCard = ({ store }: { store: Store }) => {
     <Card className="flex flex-col">
       <CardHeader className="p-0">
         <div className="w-full h-48 flex justify-center p-2">
-          <img src={`${imageBaseUrl}${store.logo}`} alt={store.name} className="object-contain rounded" />
+          <img src={`${imageBaseUrl}${store.logo}`} alt={store.name} className="object-contain rounded bg-muted px-3" />
         </div>
-        <div className="max-xs:p-4 px-6 py-3">
+        <div className="max-xs:p-4 px-6 pb-3">
           <CardTitle>
             <h2 className="text-xl">{store.name}</h2>
           </CardTitle>

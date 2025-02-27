@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MotionTopBottomDiv } from "./motion/TopBottomDiv";
-import MoreOption from "./store/MoreOption";
+import LocationStatus from "./LocationStatus";
 
 const Header = () => {
   return (
@@ -9,7 +9,8 @@ const Header = () => {
         <img src="/liveyst.svg" alt="liveyst" className="w-10 h-10 object-contain" />
         <h3 className="text-xl font-bold">Liveyst</h3>
       </Link>
-      <MoreOption />
+      {/* <MoreOption /> */}
+      <LocationStatus />
     </MotionTopBottomDiv>
   );
 };
