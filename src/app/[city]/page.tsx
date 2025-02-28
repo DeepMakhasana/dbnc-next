@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { APIBASEURL, imageBaseUrl } from "@/lib/constants";
+import { APIBASEURL, BASE_DOMAIN, imageBaseUrl } from "@/lib/constants";
 import { List, MapPin, Store } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -35,6 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   const city = (await params).city;
 
   return {
+    metadataBase: new URL(BASE_DOMAIN),
     title: `Live stores in ${city} | Liveyst`,
     description: `Quickly check stores status in ${city} with Liveyst! Get real-time updates on opening status, contact info, and services for seamless visits.`,
     keywords: [
@@ -46,6 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     openGraph: {
       title: `Live stores in ${city} | Liveyst`,
       description: `Quickly check stores status in ${city} with Liveyst! Get real-time updates on opening status, contact info, and services for seamless visits.`,
+      images: ["/opengraph-image.png"],
     },
   };
 }

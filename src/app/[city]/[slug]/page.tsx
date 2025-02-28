@@ -5,7 +5,7 @@ import SaveStore from "@/components/store/SaveStore";
 import ShareStore from "@/components/store/ShareStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { APIBASEURL } from "@/lib/constants";
+import { APIBASEURL, metaImage } from "@/lib/constants";
 import { imageBaseUrl } from "@/lib/constants";
 import { IStore } from "@/types/store";
 import { IndianRupee, Mail, MapPin, MessageCircleMore, PhoneCall, Send } from "lucide-react";
@@ -30,13 +30,14 @@ export async function generateMetadata({ params }: StoreProps): Promise<Metadata
   const store: IStore = await getStoreBySlugCity(params);
 
   return {
+    metadataBase: new URL(metaImage),
     title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name} | Liveyst`,
     description: store.bio,
     keywords: store.storeServices.map((s) => `${s.service.name} at ${store.storeAddresses.city.name}`),
     openGraph: {
       title: `${store.name} at ${store.storeAddresses.addressLine2}, ${store.storeAddresses.city.name} | Liveyst`,
       description: store.bio,
-      images: [store.logo],
+      images: [`/${store.logo}`],
     },
   };
 }
@@ -140,7 +141,7 @@ export default async function StoreBySlug({ params }: StoreProps) {
                 <CardDescription>Share Your Valuable Feedback</CardDescription>
               </CardHeader>
               <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
-                <p>Give Feedback & Review</p>
+                <p>Feedback & Review</p>
                 <a href={store?.feedbackLink}>
                   <Button>
                     <Send /> send
@@ -192,41 +193,6 @@ export default async function StoreBySlug({ params }: StoreProps) {
               </CardFooter>
             </Card>
           </MotionHideShowSection>
-          {/* lets connect */}
-          <MotionHideShowSection>
-            <Card className="w-full">
-              <CardHeader className="max-xs:p-4">
-                <CardTitle>
-                  <h2>Let&apos;s Connect</h2>
-                </CardTitle>
-                <CardDescription>Connect for Product or Services</CardDescription>
-              </CardHeader>
-              <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
-                <p>Connect on WhatsApp</p>
-                <a href={`https://api.whatsapp.com/send?phone=+91${store?.whatsappNumber}`}>
-                  <Button>
-                    <img src={`/icon/whatsapp.svg`} alt={"whatsapp"} className="w-4 h-4" /> connect
-                  </Button>
-                </a>
-              </CardContent>
-            </Card>
-          </MotionHideShowSection>
-        </div>
-        <div className="h-full flex flex-col gap-4 justify-evenly lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
-          {/* photos */}
-          <MotionHideShowSection>
-            <Card className="w-full">
-              <CardHeader className="max-xs:p-4">
-                <CardTitle>
-                  <h2>Photos</h2>
-                </CardTitle>
-                <CardDescription>Gallery of Our Best Moments</CardDescription>
-              </CardHeader>
-              <CardContent className="max-xs:p-4">
-                <PhotoCarousel photos={store?.storePhotos} storeName={store?.name} />
-              </CardContent>
-            </Card>
-          </MotionHideShowSection>
           {/* links */}
           <MotionHideShowSection>
             <Card className="w-full">
@@ -248,6 +214,41 @@ export default async function StoreBySlug({ params }: StoreProps) {
                     </Button>
                   </a>
                 ))}
+              </CardContent>
+            </Card>
+          </MotionHideShowSection>
+        </div>
+        <div className="h-full flex flex-col gap-4 justify-evenly lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
+          {/* photos */}
+          <MotionHideShowSection>
+            <Card className="w-full">
+              <CardHeader className="max-xs:p-4">
+                <CardTitle>
+                  <h2>Photos</h2>
+                </CardTitle>
+                <CardDescription>Gallery of Our Best Moments</CardDescription>
+              </CardHeader>
+              <CardContent className="max-xs:p-4">
+                <PhotoCarousel photos={store?.storePhotos} storeName={store?.name} />
+              </CardContent>
+            </Card>
+          </MotionHideShowSection>
+          {/* lets connect */}
+          <MotionHideShowSection>
+            <Card className="w-full">
+              <CardHeader className="max-xs:p-4">
+                <CardTitle>
+                  <h2>Let&apos;s Connect</h2>
+                </CardTitle>
+                <CardDescription>Connect for Product or Services</CardDescription>
+              </CardHeader>
+              <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
+                <p>Connect on WhatsApp</p>
+                <a href={`https://api.whatsapp.com/send?phone=+91${store?.whatsappNumber}`}>
+                  <Button>
+                    <img src={`/icon/whatsapp.svg`} alt={"whatsapp"} className="w-4 h-4" /> connect
+                  </Button>
+                </a>
               </CardContent>
             </Card>
           </MotionHideShowSection>

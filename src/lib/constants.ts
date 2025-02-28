@@ -21,6 +21,10 @@ export const endpoints = {
     photo: "/store/photo",
     save: "/store/save",
   },
+  utils: {
+    main: "/utils",
+    availableCities: "/utils/available-cities",
+  },
 };
 
 export const allowPath = ["/account", "/account/onboard"];
@@ -28,6 +32,7 @@ export const allowPath = ["/account", "/account/onboard"];
 export const afterLoginAllowedPath = ["/checkout"];
 
 export const imageBaseUrl = "https://dbnc.s3.ap-south-1.amazonaws.com/";
+export const metaImage = "https://dbnc.s3.ap-south-1.amazonaws.com";
 
 // export const clientEndpoints = {
 //   auth: {
@@ -42,4 +47,4 @@ export const imageBaseUrl = "https://dbnc.s3.ap-south-1.amazonaws.com/";
 // };
 
 // export const MAIN_COURSES_PAGE = "vcp-client.vercel.app";
-export const MAIN_COURSES_PAGE = "https://paramcadcenter.com/learn";
+export const BASE_DOMAIN = "https://liveyst.com";

@@ -1,4 +1,4 @@
-import { Bookmark, MoreVertical, User } from "lucide-react";
+import { Bookmark, MoreVertical, Telescope, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,14 +22,19 @@ const MoreOption = () => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={"/profile"}>
+        <Link href={"/"}>
           <DropdownMenuItem>
-            <User /> Profile
+            <Telescope /> Explore
           </DropdownMenuItem>
         </Link>
         <Link href={"/saved"}>
           <DropdownMenuItem>
-            <Bookmark /> Saved store
+            <Bookmark /> Saved
+          </DropdownMenuItem>
+        </Link>
+        <Link href={"/profile"}>
+          <DropdownMenuItem>
+            <User /> Profile
           </DropdownMenuItem>
         </Link>
         {/* <DropdownMenuSeparator /> */}

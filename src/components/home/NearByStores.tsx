@@ -6,7 +6,7 @@ import { endpoints, imageBaseUrl } from "@/lib/constants";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { List, MapPin, Route, Store } from "lucide-react";
+import { List, MapPin, MapPinOff, Route, Store } from "lucide-react";
 import { Button } from "../ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import Link from "next/link";
@@ -26,9 +26,9 @@ interface INearByStore {
 }
 
 const NearByStores = () => {
-  const [range, setRange] = useState<number>(300);
+  const [range, setRange] = useState<number>(30);
   const { coordinates } = useLocationContext();
-  const { data, isPending } = useQuery<INearByStore[]>({
+  const { data, isLoading } = useQuery<INearByStore[]>({
     queryKey: ["nearByStores", coordinates, range],
     queryFn: async function () {
       const { data } = await axiosInstance.get(
@@ -39,11 +39,11 @@ const NearByStores = () => {
     enabled: !!coordinates && !!range,
   });
 
-  console.log(data, isPending);
+  console.log(data, isLoading);
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <div className="pb-6">
+      <div className="flex justify-between items-center pb-6 pt-2">
+        <div>
           <h1 className="text-2xl font-medium line-clamp-1">Near by stores</h1>
           <p className="text-sm text-muted-foreground sm:block">Available near by stores</p>
         </div>
@@ -53,7 +53,7 @@ const NearByStores = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Filter</SelectLabel>
+              <SelectLabel>Distance</SelectLabel>
               <SelectItem value="10">10 KM</SelectItem>
               <SelectItem value="20">20 KM</SelectItem>
               <SelectItem value="30">30 KM</SelectItem>
@@ -67,11 +67,15 @@ const NearByStores = () => {
       </div>
 
       {data && data.length === 0 && (
-        <p className="text-center text-sm text-muted-foreground">No any store near by you!</p>
+        <p className="text-center text-sm text-muted-foreground">No any store near by you, explore by city.</p>
       )}
 
-      {isPending ? (
+      {isLoading ? (
         <div className="text-center">Loading...</div>
+      ) : !data ? (
+        <p className="flex justify-center items-center gap-2 text-sm text-muted-foreground">
+          <MapPinOff className="w-5 h-5" /> Start Location for near by store.
+        </p>
       ) : (
         <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mb-8">
           {data?.map((store) => (

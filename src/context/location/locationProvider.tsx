@@ -27,9 +27,8 @@ export const LocationProvider: FC<LocationProviderProps> = ({ children }) => {
           console.error("Geolocation Error:", error.message);
           setIsLoading(false);
           toast({
-            title: "Location warning:",
-            description: error.message,
-            variant: "destructive",
+            title: "Start Location from top navigation",
+            description: "Your location is off, start and try again for near by store",
           });
         }
       );
