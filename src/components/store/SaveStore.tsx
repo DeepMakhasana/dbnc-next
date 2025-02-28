@@ -38,8 +38,6 @@ const SaveStore = ({ storeId }: { storeId: number }) => {
   });
   const queryClient = useQueryClient();
 
-  console.log("data: ", data, isLoading);
-
   // mutation for save store
   const { mutate, isPending: mutateIsPending } = useMutation<SaveStoreResponse, Error, SaveStorePayload>({
     mutationFn: saveStore,

@@ -1,7 +1,7 @@
 "use client";
 import useLocationContext from "@/context/location/useLocationContext";
 import { Check, ChevronsUpDown, Loader2, Locate, MapPinCheck, MapPinPlusIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Drawer,
   DrawerClose,
@@ -43,9 +43,12 @@ const LocationStatus = () => {
   });
 
   const cities = data?.map((city) => ({ value: city.name.toLowerCase(), label: city.name }));
-  // if (params.city) {
-  //   setValue(params.city as string);
-  // }
+
+  useEffect(() => {
+    if (params.city) {
+      setValue(params.city as string);
+    }
+  }, [params.city]);
 
   return (
     <Drawer onOpenChange={setIsOpen} open={isOpen}>

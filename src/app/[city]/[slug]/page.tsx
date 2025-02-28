@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { APIBASEURL, metaImage } from "@/lib/constants";
 import { imageBaseUrl } from "@/lib/constants";
-import { IStore } from "@/types/store";
+import { IStore, IStoreCoordinates } from "@/types/store";
 import { IndianRupee, Mail, MapPin, MessageCircleMore, PhoneCall, Send } from "lucide-react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -61,8 +61,18 @@ async function getStoreBySlugCity(params: Promise<{ slug: string; city: string }
   return store;
 }
 
+async function getStoreCoordinates(params: Promise<{ slug: string; city: string }>) {
+  const param = await params;
+  const storeId = param.slug.split("-").pop();
+  const res = await fetch(`${APIBASEURL}/store/address/coordinates/${storeId}`);
+  const coordinates = await res.json();
+
+  return coordinates;
+}
+
 export default async function StoreBySlug({ params }: StoreProps) {
   const store: IStore = await getStoreBySlugCity(params);
+  const coordinates: IStoreCoordinates = await getStoreCoordinates(params);
 
   if (!store) {
     notFound();
@@ -70,7 +80,7 @@ export default async function StoreBySlug({ params }: StoreProps) {
 
   return (
     <main className="max-w-screen-2xl mx-auto px-3 lg:px-8">
-      <Header isOpen={store?.isOpen} />
+      <Header id={store?.id} />
       <div className="grid 2xl:grid-cols-3 gap-4 py-4 2xl:py-2 mb-4">
         <div className="h-full flex flex-col gap-4 lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
           {/* main Information */}
@@ -132,43 +142,47 @@ export default async function StoreBySlug({ params }: StoreProps) {
 
         <div className="h-full flex flex-col gap-4 justify-evenly lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
           {/* feedback */}
-          <MotionHideShowSection>
-            <Card className="w-full">
-              <CardHeader className="max-xs:p-4">
-                <CardTitle>
-                  <h2>Feedback</h2>
-                </CardTitle>
-                <CardDescription>Share Your Valuable Feedback</CardDescription>
-              </CardHeader>
-              <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
-                <p>Feedback & Review</p>
-                <a href={store?.feedbackLink}>
-                  <Button>
-                    <Send /> send
-                  </Button>
-                </a>
-              </CardContent>
-            </Card>
-          </MotionHideShowSection>
+          {store?.feedbackLink && (
+            <MotionHideShowSection>
+              <Card className="w-full">
+                <CardHeader className="max-xs:p-4">
+                  <CardTitle>
+                    <h2>Feedback</h2>
+                  </CardTitle>
+                  <CardDescription>Share Your Valuable Feedback</CardDescription>
+                </CardHeader>
+                <CardContent className="max-xs:p-4 flex gap-3 justify-between items-center">
+                  <p>Feedback & Review</p>
+                  <a href={store?.feedbackLink}>
+                    <Button>
+                      <Send /> send
+                    </Button>
+                  </a>
+                </CardContent>
+              </Card>
+            </MotionHideShowSection>
+          )}
           {/* Payment */}
-          <MotionHideShowSection>
-            <Card className="w-full">
-              <CardHeader className="max-xs:p-4">
-                <CardTitle>
-                  <h2>Payment</h2>
-                </CardTitle>
-                <CardDescription>Secure & Easy Payment Options</CardDescription>
-              </CardHeader>
-              <CardContent className="max-xs:p-4 flex justify-between items-center">
-                <p>UPI</p>
-                <a href={`upi://pay?pn=UPAYI&pa=${store?.upiId}&cu=INR`}>
-                  <Button>
-                    <IndianRupee /> pay
-                  </Button>
-                </a>
-              </CardContent>
-            </Card>
-          </MotionHideShowSection>
+          {store?.upiId && (
+            <MotionHideShowSection>
+              <Card className="w-full">
+                <CardHeader className="max-xs:p-4">
+                  <CardTitle>
+                    <h2>Payment</h2>
+                  </CardTitle>
+                  <CardDescription>Secure & Easy Payment Options</CardDescription>
+                </CardHeader>
+                <CardContent className="max-xs:p-4 flex justify-between items-center">
+                  <p>UPI</p>
+                  <a href={`upi://pay?pn=UPAYI&pa=${store?.upiId}&cu=INR`}>
+                    <Button>
+                      <IndianRupee /> pay
+                    </Button>
+                  </a>
+                </CardContent>
+              </Card>
+            </MotionHideShowSection>
+          )}
           {/* address */}
           <MotionHideShowSection>
             <Card className="w-full">
@@ -185,7 +199,13 @@ export default async function StoreBySlug({ params }: StoreProps) {
                 </p>
               </CardContent>
               <CardFooter className="max-xs:p-4 flex justify-between">
-                <a href={store?.storeAddresses?.googleMapLink}>
+                <a
+                  href={
+                    store?.storeAddresses?.googleMapLink
+                      ? store?.storeAddresses?.googleMapLink
+                      : `https://www.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}`
+                  }
+                >
                   <Button>
                     <MapPin /> Location
                   </Button>
@@ -194,29 +214,31 @@ export default async function StoreBySlug({ params }: StoreProps) {
             </Card>
           </MotionHideShowSection>
           {/* links */}
-          <MotionHideShowSection>
-            <Card className="w-full">
-              <CardHeader className="max-xs:p-4">
-                <CardTitle>
-                  <h2>Impotent Links</h2>
-                </CardTitle>
-                <CardDescription>Quick Access to Key Links</CardDescription>
-              </CardHeader>
-              <CardContent className="max-xs:p-4 flex gap-3">
-                {store?.storeSocialMedias?.map((link) => (
-                  <a key={link.id} href={link.link}>
-                    <Button variant={"outline"} size={"icon"}>
-                      <img
-                        src={`/icon/${link?.socialMedia?.icon}.svg`}
-                        alt={link?.socialMedia?.name}
-                        className="w-5 h-5"
-                      />
-                    </Button>
-                  </a>
-                ))}
-              </CardContent>
-            </Card>
-          </MotionHideShowSection>
+          {store?.storeSocialMedias.length > 0 && (
+            <MotionHideShowSection>
+              <Card className="w-full">
+                <CardHeader className="max-xs:p-4">
+                  <CardTitle>
+                    <h2>Impotent Links</h2>
+                  </CardTitle>
+                  <CardDescription>Quick Access to Key Links</CardDescription>
+                </CardHeader>
+                <CardContent className="max-xs:p-4 flex gap-3">
+                  {store?.storeSocialMedias?.map((link) => (
+                    <a key={link.id} href={link.link}>
+                      <Button variant={"outline"} size={"icon"}>
+                        <img
+                          src={`/icon/${link?.socialMedia?.icon}.svg`}
+                          alt={link?.socialMedia?.name}
+                          className="w-5 h-5"
+                        />
+                      </Button>
+                    </a>
+                  ))}
+                </CardContent>
+              </Card>
+            </MotionHideShowSection>
+          )}
         </div>
         <div className="h-full flex flex-col gap-4 justify-evenly lg-2xl:grid lg-2xl:grid-cols-2 lg-2xl:self-stretch">
           {/* photos */}

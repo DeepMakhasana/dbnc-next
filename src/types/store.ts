@@ -75,6 +75,12 @@ export interface IStore {
   storePhotos: StorePhoto[];
 }
 
+export interface IStoreCoordinates {
+  id: number;
+  latitude: number;
+  longitude: number;
+}
+
 export interface SaveStorePayload {
   storeId: number;
 }
