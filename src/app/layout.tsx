@@ -6,7 +6,7 @@ import TanstackProvider from "@/components/TanstackProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/context/auth/authProvider";
 import { LocationProvider } from "@/context/location/locationProvider";
-import NextTopLoader from "nextjs-toploader";
+// import NextTopLoader from "nextjs-toploader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextTopLoader color="#18181B" showSpinner={false} />
+        {/* <NextTopLoader color="#18181B" showSpinner={false} /> */}
         <LocationProvider>
           <AuthProvider>
             <TanstackProvider>
