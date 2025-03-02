@@ -98,7 +98,7 @@ const SaveStore = ({ storeId }: { storeId: number }) => {
   }
 
   return (
-    <Button variant={data ? "default" : "outline"} onClick={saveHandler}>
+    <Button variant={"default"} onClick={saveHandler}>
       {data ? <BookmarkCheck /> : <Bookmark />} {data ? "saved" : "save"}
     </Button>
   );
