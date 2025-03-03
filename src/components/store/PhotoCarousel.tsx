@@ -40,7 +40,7 @@ const PhotoCarousel = ({ photos, storeName }: { photos: StorePhoto[]; storeName:
                   <img
                     src={`${imageBaseUrl}${photo.path}`}
                     alt={storeName}
-                    className="w-full rounded h-auto object-cover"
+                    className="w-full rounded max-h-80 object-contain"
                   />
                 </CardContent>
               </Card>

@@ -223,15 +223,16 @@ export default async function StoreBySlug({ params }: StoreProps) {
                   </CardTitle>
                   <CardDescription>Quick Access to Key Links</CardDescription>
                 </CardHeader>
-                <CardContent className="max-xs:p-4 flex gap-3">
+                <CardContent className="max-xs:p-4 flex flex-wrap gap-3">
                   {store?.storeSocialMedias?.map((link) => (
                     <a key={link.id} href={link.link}>
-                      <Button variant={"outline"} size={"icon"}>
+                      <Button variant={"outline"}>
                         <img
                           src={`/icon/${link?.socialMedia?.icon}.svg`}
                           alt={link?.socialMedia?.name}
                           className="w-5 h-5"
                         />
+                        <span>{link?.socialMedia?.name}</span>
                       </Button>
                     </a>
                   ))}
